@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #050816;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background:
+    radial-gradient(circle at top, rgba(118, 127, 159, 0.12), transparent 26%),
+    linear-gradient(180deg, #090d1b 0%, #050816 52%, #03050c 100%);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+a {
+  text-decoration: none;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+@layer components {
+  .panel {
+    @apply rounded-[2rem] border border-white/10 bg-white/[0.045] shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-2xl;
+  }
+
+  .button-primary {
+    @apply inline-flex items-center justify-center rounded-full border border-white/10 bg-white px-6 py-3 text-sm font-medium text-slate-950 transition duration-300 hover:-translate-y-0.5 hover:bg-white/90 focus:outline-none focus:ring-2 focus:ring-white/30;
+  }
+
+  .button-secondary {
+    @apply inline-flex items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-6 py-3 text-sm font-medium text-white/80 transition duration-300 hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.09] focus:outline-none focus:ring-2 focus:ring-white/20;
+  }
+
+  .showcase-frame {
+    @apply relative aspect-[4/5] overflow-hidden rounded-[2.25rem] border border-white/10 bg-[#090d1b];
+  }
+
+  .showcase-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: linear-gradient(180deg, black 35%, transparent 100%);
+  }
+
+  .showcase-gradient {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 15% 15%, rgba(173, 181, 204, 0.18), transparent 28%),
+      radial-gradient(circle at 85% 20%, rgba(130, 145, 173, 0.22), transparent 32%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 30%, rgba(255, 255, 255, 0.03) 100%);
+  }
+
+  .placeholder-visual {
+    @apply relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01))];
+  }
+
+  .placeholder-visual::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(209, 214, 230, 0.18), transparent 22%),
+      radial-gradient(circle at 80% 30%, rgba(147, 157, 180, 0.18), transparent 24%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 45%, rgba(255, 255, 255, 0.05));
+    transform: rotate(-8deg);
+  }
+
+  .placeholder-badge {
+    @apply absolute left-5 top-5 rounded-full border border-white/10 bg-black/25 px-4 py-2 text-xs uppercase tracking-[0.28em] text-white/45 backdrop-blur-xl;
+  }
+
+  .hero-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(70px);
+    opacity: 0.22;
+    pointer-events: none;
+  }
+
+  .hero-orb-left {
+    width: 22rem;
+    height: 22rem;
+    top: 6rem;
+    left: -7rem;
+    background: rgba(138, 151, 186, 0.34);
+  }
+
+  .hero-orb-right {
+    width: 26rem;
+    height: 26rem;
+    top: 9rem;
+    right: -9rem;
+    background: rgba(84, 98, 133, 0.24);
+  }
+}
