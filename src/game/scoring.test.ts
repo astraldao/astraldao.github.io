@@ -1,0 +1,1 @@
+import{describe,it,expect}from'vitest';import{speedBonus,rankFor}from'./scoring';describe('scoring',()=>{it('caps speed bonus',()=>{expect(speedBonus(0)).toBe(50);expect(speedBonus(10000)).toBe(0)});it('assigns ranks',()=>{expect(rankFor(750)[0]).toBe('S');expect(rankFor(0)[0]).toBe('D')})});
