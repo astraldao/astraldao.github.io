@@ -1,3 +1,21 @@
-import type{ElementKey,Phase}from'../types';
-const buttons:{key:ElementKey;label:string;sub:string;hotkey:string}[]=[{key:'H',label:'H',sub:'水素',hotkey:'1'},{key:'O',label:'O',sub:'酸素',hotkey:'2'},{key:'C',label:'C',sub:'炭素',hotkey:'3'},{key:'N',label:'N',sub:'窒素',hotkey:'4'},{key:'Cl',label:'Cl',sub:'塩素',hotkey:'5'},{key:'Na',label:'Na',sub:'ナトリウム',hotkey:'6'},{key:'heat',label:'熱',sub:'HEAT',hotkey:'7'},{key:'light',label:'光',sub:'LIGHT',hotkey:'8'},{key:'catalyst',label:'触媒',sub:'CATALYST',hotkey:'9'}];
-export function ControlPad({phase,lit,onPress,quizChoices,onAnswer}:{phase:Phase;lit:ElementKey|null;onPress:(k:ElementKey)=>void;quizChoices?:{name:string;formula:string}[];onAnswer:(i:number)=>void}){const quiz=phase==='quiz';return <div className="pad">{buttons.map((b,i)=><button key={b.key} disabled={phase!=='input'&&!quiz||quiz&&i>2} onClick={()=>quiz?onAnswer(i):onPress(b.key)} className={`chem-button ${lit===b.key?'active':''} ${quiz&&i<3?'choice':''}`} aria-pressed={lit===b.key}><kbd>{b.hotkey}</kbd>{quiz&&i<3?<><strong>{'ABC'[i]}</strong><span>{quizChoices?.[i].name}</span><em>{quizChoices?.[i].formula}</em></>:<><strong>{b.label}</strong><span>{b.sub}</span></>}</button>)}</div>}
+import type {ElementKey,Phase,Product} from '../types';
+
+const controls:{key:ElementKey;symbol:string;name:string;hotkey:string}[]=[
+  {key:'H',symbol:'H',name:'水素',hotkey:'1'},{key:'O',symbol:'O',name:'酸素',hotkey:'2'},{key:'C',symbol:'C',name:'炭素',hotkey:'3'},
+  {key:'N',symbol:'N',name:'窒素',hotkey:'4'},{key:'Cl',symbol:'Cl',name:'塩素',hotkey:'5'},{key:'Na',symbol:'Na',name:'ナトリウム',hotkey:'6'},
+  {key:'heat',symbol:'熱',name:'HEAT',hotkey:'7'},{key:'light',symbol:'光',name:'LIGHT',hotkey:'8'},{key:'catalyst',symbol:'触媒',name:'CATALYST',hotkey:'9'},
+];
+
+export function ControlPad({phase,lit,onPress}:{phase:Phase;lit:ElementKey|null;onPress:(key:ElementKey)=>void}){
+  return <div className="pad" aria-label="元素・反応条件 操作盤">{controls.map(control=><button
+    type="button" key={control.key} data-key={control.key} disabled={phase!=='input'} onClick={()=>onPress(control.key)}
+    className={`chem-button ${control.key===lit?'is-lit':''}`} aria-label={`${control.name}、キー ${control.hotkey}`} aria-pressed={control.key===lit}>
+    <kbd>{control.hotkey}</kbd><strong>{control.symbol}</strong><span>{control.name}</span><i aria-hidden="true" />
+  </button>)}</div>;
+}
+
+export function Quiz({choices,onAnswer}:{choices:Product[];onAnswer:(index:number)=>void}){
+  return <div className="quiz" aria-label="生成物の選択肢">{choices.map((choice,index)=><button type="button" key={`${choice.formula}-${index}`} onClick={()=>onAnswer(index)}>
+    <b>{'ABC'[index]}</b><span>{choice.name}</span><strong>{choice.formula}</strong><small>{'ABC'[index]} キー</small>
+  </button>)}</div>;
+}
